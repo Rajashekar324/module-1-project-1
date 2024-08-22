@@ -1,0 +1,53 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int n,t;
+    cin>>n;
+    vector<pair<int,int>>acc(n);
+    for(int i=0;i<n;i++)
+    {
+        cin>>acc[i].first>>acc[i].second;
+    }
+    cin>>t;
+    for(int i=0;i<t;i++)
+    {
+        int from_userid,to_userid,amt;
+        cin>>from_userid>>to_userid>>amt;
+        int from_acc=0,to_acc=0;
+        for(int j=0;j<n;j++)
+        {
+            if(acc[j].first == from_userid)
+                from_acc=j;
+            if(acc[j].first == to_userid)
+                to_acc=j;
+        }
+        if(acc[from_acc].second>=amt)
+        {
+            acc[from_acc].second-=amt;
+            acc[to_acc].second+=amt;
+            cout<<"Success"<<endl;
+        }
+        else
+        
+            cout<<"Failure"<<endl;
+        }
+    }
+
+    sort(acc.begin(),acc.end(),[](const pair<int,int>&a,const pair<int,int>&b)
+    {
+        return a.second<b.second;
+    });
+    cout<<endl;
+    for(int i=0;i<n;i++)
+    {
+        cout<<acc[i].first<<" "<<acc[i].second<<endl;
+    }
+    return 0;
+}
